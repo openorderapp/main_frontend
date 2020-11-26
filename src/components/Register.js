@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles, Container, Button, CssBaseline, TextField, Typography, Select, MenuItem, InputLabel } from '@material-ui/core';
 import Recaptcha from 'react-google-invisible-recaptcha';
 
@@ -54,8 +55,7 @@ export default () => {
             admin: admin,
             captcha: captcha
         }
-        console.log(data);
-        fetch('http://localhost:8080/auth/employee/register', {
+        fetch('http://localhost:8000/auth/employee/register', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -184,6 +184,9 @@ export default () => {
                         >
                             Register
                         </Button>
+                        <Link to="/" variant="body2">
+                            {"Already have an account? Log in"}
+                        </Link>
                     </form>
                 </div>
             </div>
