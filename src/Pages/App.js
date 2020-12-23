@@ -1,9 +1,8 @@
 import React, { useReducer } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Login from './components/Login';
-import Register from './components/Register';
-import Home from './components/Home';
-import Header from './components/Header';
+import Login from './Login';
+import Register from './Register';
+import Home from './Home';
 
 export const AuthContext = React.createContext();
 
@@ -32,6 +31,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
+        access_token: null,
+        refresh_token: null,
         user: null
       };
     default:
@@ -44,10 +45,10 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
-      <Header />
       <Router>
-        <Route exact path="/" component={!state.isAuthenticated ? Login : Home} />
+        <Route exact path="/" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route path="/home/" component={Home} />
       </Router>
     </AuthContext.Provider>
   );

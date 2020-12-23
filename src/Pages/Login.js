@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, Container, Button, CssBaseline, TextField, Typography } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import Recaptcha from 'react-google-invisible-recaptcha';
-import { AuthContext } from '../App';
+import { AuthContext } from './App';
+import SERVICE_PATH from '../config/API_URL';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 )
 );
 
-export default () => {
+export default (props) => {
     const classes = useStyles();
     const { dispatch } = useContext(AuthContext);
     const initialState = {
@@ -65,7 +67,7 @@ export default () => {
             errorMessage: null
         });
 
-        fetch('http://localhost:8000/auth/employee/login', {
+        fetch(SERVICE_PATH.LOGIN, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -94,7 +96,9 @@ export default () => {
                         access_token: response.access_token,
                         refresh_token: response.refresh_token
                     }
-                })
+                });
+
+                props.history.push('/home');
             })
             .catch(error => setData({
                 ...data,
@@ -161,7 +165,7 @@ export default () => {
                         </Link>
                     </form>
                     {data.errorMessage && (
-                        <Typography className="form-error">{data.errorMessage}</Typography>
+                        <Alert severity="error">{data.errorMessage}</Alert>
                     )}
                 </div>
             </div>

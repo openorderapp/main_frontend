@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, Container, Button, CssBaseline, TextField, Typography, Select, MenuItem, InputLabel } from '@material-ui/core';
 import Recaptcha from 'react-google-invisible-recaptcha';
+import SERVICE_PATH from '../config/API_URL';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -55,7 +56,7 @@ export default () => {
             admin: admin,
             captcha: captcha
         }
-        fetch('http://localhost:8000/auth/employee/register', {
+        fetch(SERVICE_PATH.REGISTER, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
